@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &654801761030703329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3460599802124620974}
+  m_Layer: 0
+  m_Name: BulletSpawnTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3460599802124620974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654801761030703329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 3.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3513520281414860962}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3513520281414860960
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,6 +42,7 @@ GameObject:
   - component: {fileID: 3513520281414860962}
   - component: {fileID: 3513520281414860963}
   - component: {fileID: 3513520281414860965}
+  - component: {fileID: 139146544676088404}
   m_Layer: 0
   m_Name: BallHandler
   m_TagString: Untagged
@@ -32,6 +64,7 @@ Transform:
   m_Children:
   - {fileID: 3513520281760231885}
   - {fileID: 3513520282911336246}
+  - {fileID: 3460599802124620974}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -64,6 +97,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 118
   m_CollisionDetection: 0
+--- !u!114 &139146544676088404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513520281414860960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91490c653265f124c8c7286e902303d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bouncingBall: {fileID: 3513520282911336246}
+  bulletPrefab: {fileID: 4977889114365174262, guid: 996d904834468bb43bc483ca3b4b5d17,
+    type: 3}
+  bulletSpawn: {fileID: 3460599802124620974}
+  scalingThreshold: 0.5
+  scaleSpeed: 1
 --- !u!1 &3513520281760231880
 GameObject:
   m_ObjectHideFlags: 0

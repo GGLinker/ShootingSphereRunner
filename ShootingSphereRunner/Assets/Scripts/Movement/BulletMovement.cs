@@ -6,7 +6,7 @@ public class BulletMovement : MonoBehaviour
 {
     [SerializeField] private float flySpeed;
 
-    public delegate void BulletCollision(BulletMovement self);
+    public delegate void BulletCollision(Vector3 bulletPosition);
     public event BulletCollision OnBulletCollision;
 
     private Rigidbody bulletRigidbody;
@@ -14,6 +14,10 @@ public class BulletMovement : MonoBehaviour
     private void Start()
     {
         bulletRigidbody = transform.GetComponent<Rigidbody>();
+    }
+
+    public void Fly()
+    {
         bulletRigidbody.velocity = Vector3.forward * flySpeed;
     }
 
@@ -21,7 +25,7 @@ public class BulletMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            OnBulletCollision?.Invoke(this);
+            OnBulletCollision?.Invoke(transform.position);
         }
     }
 }

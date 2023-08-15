@@ -17,10 +17,10 @@ public class BallHandlerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        /*if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             MoveTo(transform.position + new Vector3(0, 0, 3));
-        }
+        }*/
     }
 
     public void MoveTo(Vector3 target)
