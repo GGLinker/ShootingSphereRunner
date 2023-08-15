@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 3513520282911336244}
   - component: {fileID: 3513520282911336245}
   - component: {fileID: 3513520282911336233}
-  - component: {fileID: 3513520282911336232}
+  - component: {fileID: 4498967621734822977}
   m_Layer: 0
   m_Name: BouncingBall
   m_TagString: Untagged
@@ -212,7 +212,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d5386871b59b31d46b403402006fbaaf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -263,7 +263,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 122
   m_CollisionDetection: 1
---- !u!114 &3513520282911336232
+--- !u!114 &4498967621734822977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3513520282911336242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b4d715649b436b459f231f5962e335a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f3b03e2943eef64fb522585b6de424c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   surfacePlaneCollider: {fileID: 0}
