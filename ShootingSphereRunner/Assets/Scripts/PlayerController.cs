@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -55,9 +56,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void MakeExplosion(Vector3 bulletPosition)
+    private void MakeExplosion(GameObject bullet, List<ObstacleDestruction> surroundObstacles)
     {
+        foreach (var obstacle in surroundObstacles)
+        {
+            obstacle.DestroyObstacle();
+        }
         
+        Destroy(bullet);
     }
 
     private void GameOver()
