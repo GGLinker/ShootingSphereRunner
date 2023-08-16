@@ -115,12 +115,17 @@ MonoBehaviour:
   handlerMovement: {fileID: 3513520281414860963}
   bouncingBall: {fileID: 3513520282911336246}
   roadPlane: {fileID: 533389887651004099}
+  temple: {fileID: 0}
+  templeTrigger: {fileID: 0}
   bulletPrefab: {fileID: 4977889114365174262, guid: 996d904834468bb43bc483ca3b4b5d17,
     type: 3}
   bulletSpawn: {fileID: 3460599802124620974}
   obstacleDetectionAccuracy: 4
   scalingThreshold: 0.5
   scaleSpeed: 0.5
+  goalLabel: {fileID: 0}
+  goalLabelAnimation: {fileID: 0}
+  goalClip: {fileID: 7400000, guid: a964f9b6c2ddc1c498ad2adea282b5fe, type: 2}
 --- !u!114 &788737170081664261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +145,7 @@ MonoBehaviour:
   temple: {fileID: 0}
   minSpawnDistance: 3
   templeFreeDistance: 5
-  widthSpawnBounds: 10
+  widthSpawnBounds: 8
 --- !u!1 &3513520281760231880
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +246,7 @@ GameObject:
   - component: {fileID: 4498967621734822977}
   m_Layer: 0
   m_Name: BouncingBall
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class TempleTrigger : MonoBehaviour
+{
+    [SerializeField] private Animation doorAnimation;
+    [SerializeField] private AnimationClip openDoorClip;
+    
+    public delegate void TempleTriggerActivate();
+    public event TempleTriggerActivate OnTempleTriggerActivated;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            doorAnimation.Play(openDoorClip.name);
+            
+            OnTempleTriggerActivated?.Invoke();
+        }
+    }
+}

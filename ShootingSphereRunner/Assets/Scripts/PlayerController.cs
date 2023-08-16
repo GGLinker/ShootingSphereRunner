@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,7 +12,9 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Transform bouncingBall;
     [SerializeField] private Transform roadPlane;
+    
     [SerializeField] private Transform temple;
+    [SerializeField] private TempleTrigger templeTrigger;
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawn;
@@ -19,6 +23,10 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private float scalingThreshold;
     [SerializeField] private float scaleSpeed;
+
+    [SerializeField] private TextMeshProUGUI goalLabel;
+    [SerializeField] private Animation goalLabelAnimation;
+    [SerializeField] private AnimationClip goalClip;
 
     private bool bTouching;
     private bool bInputAllowed = true;
@@ -33,6 +41,10 @@ public class PlayerController : MonoBehaviour
             }
             
             bInputAllowed = true;
+        };
+        templeTrigger.OnTempleTriggerActivated += () =>
+        {
+            StartCoroutine(ReachGoal(true));
         };
     }
 
@@ -76,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
             if (bouncingBall.localScale.x <= scalingThreshold)
             {
-                GameOver();
+                StartCoroutine(ReachGoal(false));
                 yield break;
             }
             
@@ -126,9 +138,12 @@ public class PlayerController : MonoBehaviour
         }
         handlerMovement.MoveTo( Vector3.forward * (closestPosition - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)));
     }
-    
-    private void GameOver()
+
+    private IEnumerator ReachGoal(bool bWin)
     {
-        
+        goalLabel.SetText(bWin ? "Victory!" : "Game Over");
+        goalLabelAnimation.Play(goalClip.name);
+        yield return new WaitForSecondsRealtime(4f);
+        SceneManager.LoadScene("Level");
     }
 }
