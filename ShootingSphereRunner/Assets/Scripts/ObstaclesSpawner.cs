@@ -13,7 +13,7 @@ public class ObstaclesSpawner : MonoBehaviour
     [SerializeField] public float templeFreeDistance;
     [SerializeField] public float widthSpawnBounds;
 
-    public float DistanceToTemple => Vector3.Distance(temple.position - Vector3.forward * templeFreeDistance, bulletSpawn.position);
+    public float DistanceToTemple => temple.position.z - templeFreeDistance - bulletSpawn.position.z + bulletSpawn.localPosition.z;
 
     private void Start()
     {

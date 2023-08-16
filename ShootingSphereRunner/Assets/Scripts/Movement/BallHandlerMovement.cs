@@ -25,7 +25,6 @@ public class BallHandlerMovement : MonoBehaviour
             StopCoroutine(movementCoroutineHandler);
         }
         targetVector = target;
-        Debug.Log("Target: " + target);
         movementCoroutineHandler = StartCoroutine(Movement());
     }
 

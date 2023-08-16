@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
             if (Vector3.Distance(bulletSpawn.position, temple.position) < spawner.templeFreeDistance)
             {
                 handlerMovement.MoveTo( Vector3.forward * temple.position.z);
+                return;
             }
             
             bInputAllowed = true;
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
         if (bulletMovement)
         {
             bulletMovement.transform.localScale = new Vector3(scalingThreshold, scalingThreshold, scalingThreshold);
-            bulletMovement.OnBulletCollision += (GameObject bullet, List<ObstacleDestruction> surroundObstacles) =>
+            bulletMovement.OnBulletCollision += (bullet, surroundObstacles) =>
             {
                 StartCoroutine(BulletCollisionProcess(bullet, surroundObstacles));
             };
@@ -116,11 +117,12 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         
-        float closestPosition = spawner.DistanceToTemple;
+        float closestPosition = float.MaxValue;
         
         float roadPlaneWidth = roadPlane.localScale.x * 10;
         float shiftFraction = roadPlaneWidth / (obstacleDetectionAccuracy - 1);
-        
+
+        bool bModified = false;
         for (int i = 0; i < obstacleDetectionAccuracy; i++)
         {
             if (Physics.Raycast(
@@ -129,18 +131,31 @@ public class PlayerController : MonoBehaviour
                     out hit, 
                     spawner.DistanceToTemple))
             {
-                //Debug.Log(i + ":// " + -roadPlaneWidth / 2 + "; "  + shiftFraction * i + " = " + (shiftFraction * i - roadPlaneWidth / 2));
+                Debug.Log(hit.collider.gameObject.CompareTag("Obstacle") + "// " + hit.transform.position.z + " " + closestPosition);
                 if (hit.collider.gameObject.CompareTag("Obstacle") && hit.transform.position.z < closestPosition)
                 {
                     closestPosition = hit.transform.position.z;
+                    bModified = true;
                 }
             }
         }
-        handlerMovement.MoveTo( Vector3.forward * (closestPosition - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)));
+        Debug.Log("Closest: " + closestPosition + "; modified: " + bModified);
+        if (bModified)
+        {
+            handlerMovement.MoveTo( Vector3.forward * (closestPosition - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)));
+        }
+        else
+        {
+            handlerMovement.MoveTo( Vector3.forward * spawner.DistanceToTemple);
+        }
     }
 
     private IEnumerator ReachGoal(bool bWin)
     {
+        if (bWin)
+        {
+            Debug.Log("Win????");
+        }
         goalLabel.SetText(bWin ? "Victory!" : "Game Over");
         goalLabelAnimation.Play(goalClip.name);
         yield return new WaitForSecondsRealtime(4f);
