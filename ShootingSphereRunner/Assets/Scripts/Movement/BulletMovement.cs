@@ -36,20 +36,21 @@ public class BulletMovement : MonoBehaviour
     private IEnumerator AutoDestruct()
     {
         yield return new WaitForSecondsRealtime(autoDestructDelay);
-        Collision(new List<ObstacleDestruction>());
+        StartCoroutine(Collision(new List<ObstacleDestruction>()));
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Collision(surroundObstacles);
+            StartCoroutine(Collision(surroundObstacles));
         }
     }
 
-    private void Collision(List<ObstacleDestruction> obstacles)
+    private IEnumerator Collision(List<ObstacleDestruction> obstacles)
     {
         OnBulletCollision?.Invoke(gameObject, obstacles);
+        yield return new WaitForSecondsRealtime(1f);
     }
 
 

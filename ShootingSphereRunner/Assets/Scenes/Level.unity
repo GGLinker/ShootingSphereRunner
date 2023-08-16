@@ -209,8 +209,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 88
+  m_fontSizeBase: 88
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -662,6 +662,11 @@ PrefabInstance:
       propertyPath: goalLabelAnimation
       value: 
       objectReference: {fileID: 325310235}
+    - target: {fileID: 139146544676088404, guid: 541a8e4b7437a164da3db5d429a42ba5,
+        type: 3}
+      propertyPath: obstacleDetectionAccuracy
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 788737170081664261, guid: 541a8e4b7437a164da3db5d429a42ba5,
         type: 3}
       propertyPath: temple
@@ -670,7 +675,7 @@ PrefabInstance:
     - target: {fileID: 788737170081664261, guid: 541a8e4b7437a164da3db5d429a42ba5,
         type: 3}
       propertyPath: fillRate
-      value: 70
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 3513520281414860960, guid: 541a8e4b7437a164da3db5d429a42ba5,
         type: 3}
@@ -789,7 +794,7 @@ PrefabInstance:
     - target: {fileID: 6009896893447430312, guid: 4fead528bcbc12344a9f0e409e293f93,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 38.298
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 6009896893447430312, guid: 4fead528bcbc12344a9f0e409e293f93,
         type: 3}

@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator TouchAction()
     {
-        BulletMovement bulletMovement = Instantiate(bulletPrefab, bulletSpawn).transform.GetComponent<BulletMovement>();
+        BulletMovement bulletMovement = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity).transform.GetComponent<BulletMovement>();
         if (bulletMovement)
         {
             bulletMovement.transform.localScale = Vector3.zero;
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
             {
                 var initialScaleVector = new Vector3(bulletInitialScale, bulletInitialScale, bulletInitialScale);
-                AddScale(initialScaleVector);
+                DistractScale(initialScaleVector);
                 bulletMovement.AddScale(initialScaleVector);
             }
 
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
             {
                 float scaleDiff = bouncingBall.localScale.x - Mathf.Lerp(bouncingBall.localScale.x, 0, scaleSpeed * Time.deltaTime);
                 var scaleDiffVector = new Vector3(scaleDiff, scaleDiff, scaleDiff);
-                AddScale(scaleDiffVector);
+                DistractScale(scaleDiffVector);
                 bulletMovement.AddScale(scaleDiffVector);
 
                 yield return null;
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
             bulletMovement.Fly();
         }
     }
-    private void AddScale(Vector3 scaleVector)
+    private void DistractScale(Vector3 scaleVector)
     {
         bouncingBall.localScale -= scaleVector;
         roadPlane.localScale = new Vector3(bouncingBall.localScale.z / 10, roadPlane.localScale.y, roadPlane.localScale.z);
@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator BulletCollisionProcess(GameObject bullet, List<ObstacleDestruction> surroundObstacles)
     {
-        Debug.Log("!!!");
         MakeExplosion(bullet, surroundObstacles);
         if (surroundObstacles.Count > 0)
         {
@@ -143,7 +142,7 @@ public class PlayerController : MonoBehaviour
         float roadPlaneWidth = roadPlane.localScale.x * 10;
         float shiftFraction = roadPlaneWidth / (obstacleDetectionAccuracy - 1);
 
-        bool bModified = false;
+        bool bObstaclesFound = false;
         for (int i = 0; i < obstacleDetectionAccuracy; i++)
         {
             if (Physics.Raycast(
@@ -152,15 +151,17 @@ public class PlayerController : MonoBehaviour
                     out hit,
                     spawner.DistanceToTemple))
             {
-                if (hit.collider.gameObject.CompareTag("Obstacle") && hit.transform.position.z < closestPosition)
-                {
-                    closestPosition = hit.transform.position.z;
-                    bModified = true;
+                if (hit.collider.gameObject.CompareTag("Obstacle")) {
+                    bObstaclesFound = true;
+                    if (hit.transform.position.z < closestPosition)
+                    {
+                        closestPosition = hit.transform.position.z;
+                    }
                 }
             }
         }
 
-        handlerMovement.MoveTo(Vector3.forward * (bModified ? 
+        handlerMovement.MoveTo(Vector3.forward * (bObstaclesFound ? 
             (closestPosition - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)) 
             : spawner.DistanceToTemple));
     }
