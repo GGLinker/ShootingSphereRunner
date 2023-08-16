@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flySpeed: 15
   triggerExpansionCoefficient: 7.5
+  autoDestructDelay: 0.7
   triggerSphere: {fileID: 6424880115943202228}
 --- !u!135 &6424880115943202228
 SphereCollider:

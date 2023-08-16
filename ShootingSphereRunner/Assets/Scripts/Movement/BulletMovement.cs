@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +6,8 @@ using UnityEngine;
 public class BulletMovement : MonoBehaviour
 {
     [SerializeField] private float flySpeed;
-    [SerializeField] private float triggerExpansionCoefficient;
+    [SerializeField, Range(1, 20)] private float triggerExpansionCoefficient;
+    [SerializeField, Range(0, 2)] private float autoDestructDelay;
     [SerializeField] private SphereCollider triggerSphere;
 
     public delegate void BulletCollision(GameObject self, List<ObstacleDestruction> surroundObstacles);
@@ -28,17 +30,29 @@ public class BulletMovement : MonoBehaviour
     public void Fly()
     {
         bulletRigidbody.velocity = Vector3.forward * flySpeed;
+        StartCoroutine(AutoDestruct());
+    }
+
+    private IEnumerator AutoDestruct()
+    {
+        yield return new WaitForSecondsRealtime(autoDestructDelay);
+        Collision(new List<ObstacleDestruction>());
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            OnBulletCollision?.Invoke(gameObject, surroundObstacles);
+            Collision(surroundObstacles);
         }
     }
 
-    
+    private void Collision(List<ObstacleDestruction> obstacles)
+    {
+        OnBulletCollision?.Invoke(gameObject, obstacles);
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Obstacle"))

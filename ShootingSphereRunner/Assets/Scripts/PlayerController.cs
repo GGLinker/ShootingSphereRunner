@@ -20,7 +20,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform bulletSpawn;
 
     [SerializeField, Range(2, 10)] private int obstacleDetectionAccuracy;
+
+    [SerializeField] private float ballInitialScale;
     
+    [SerializeField] private float bulletInitialScale;
     [SerializeField] private float scalingThreshold;
     [SerializeField] private float scaleSpeed;
 
@@ -33,6 +36,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        bouncingBall.localScale = new Vector3(ballInitialScale, ballInitialScale, ballInitialScale);
+        roadPlane.localScale = new Vector3(bouncingBall.localScale.x / 10, roadPlane.localScale.y, roadPlane.localScale.z);
+        
         handlerMovement.OnMovementTargetReached += () =>
         {
             if (Vector3.Distance(bulletSpawn.position, temple.position) < spawner.templeFreeDistance)
@@ -68,18 +74,24 @@ public class PlayerController : MonoBehaviour
         BulletMovement bulletMovement = Instantiate(bulletPrefab, bulletSpawn).transform.GetComponent<BulletMovement>();
         if (bulletMovement)
         {
-            bulletMovement.transform.localScale = new Vector3(scalingThreshold, scalingThreshold, scalingThreshold);
+            bulletMovement.transform.localScale = Vector3.zero;
             bulletMovement.OnBulletCollision += (bullet, surroundObstacles) =>
             {
                 StartCoroutine(BulletCollisionProcess(bullet, surroundObstacles));
             };
 
+            {
+                var initialScaleVector = new Vector3(bulletInitialScale, bulletInitialScale, bulletInitialScale);
+                AddScale(initialScaleVector);
+                bulletMovement.AddScale(initialScaleVector);
+            }
+
+
             while (bTouching)
             {
                 float scaleDiff = bouncingBall.localScale.x - Mathf.Lerp(bouncingBall.localScale.x, 0, scaleSpeed * Time.deltaTime);
                 var scaleDiffVector = new Vector3(scaleDiff, scaleDiff, scaleDiff);
-                bouncingBall.localScale -= scaleDiffVector;
-                roadPlane.localScale = new Vector3(bouncingBall.localScale.z / 10, roadPlane.localScale.y, roadPlane.localScale.z);
+                AddScale(scaleDiffVector);
                 bulletMovement.AddScale(scaleDiffVector);
 
                 yield return null;
@@ -96,11 +108,20 @@ public class PlayerController : MonoBehaviour
             bulletMovement.Fly();
         }
     }
+    private void AddScale(Vector3 scaleVector)
+    {
+        bouncingBall.localScale -= scaleVector;
+        roadPlane.localScale = new Vector3(bouncingBall.localScale.z / 10, roadPlane.localScale.y, roadPlane.localScale.z);
+    }
 
     private IEnumerator BulletCollisionProcess(GameObject bullet, List<ObstacleDestruction> surroundObstacles)
     {
+        Debug.Log("!!!");
         MakeExplosion(bullet, surroundObstacles);
-        yield return new WaitForSecondsRealtime(surroundObstacles[0].destructionClip.length + .1f);
+        if (surroundObstacles.Count > 0)
+        {
+            yield return new WaitForSecondsRealtime(surroundObstacles[0].destructionClip.length + .1f);
+        }
         MoveCloserToObstacles();
     }
 
@@ -116,9 +137,9 @@ public class PlayerController : MonoBehaviour
     private void MoveCloserToObstacles()
     {
         RaycastHit hit;
-        
+
         float closestPosition = float.MaxValue;
-        
+
         float roadPlaneWidth = roadPlane.localScale.x * 10;
         float shiftFraction = roadPlaneWidth / (obstacleDetectionAccuracy - 1);
 
@@ -127,11 +148,10 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(
                     new Vector3(shiftFraction * i - roadPlaneWidth / 2, 1f, bulletSpawn.position.z),
-                    Vector3.forward, 
-                    out hit, 
+                    Vector3.forward,
+                    out hit,
                     spawner.DistanceToTemple))
             {
-                Debug.Log(hit.collider.gameObject.CompareTag("Obstacle") + "// " + hit.transform.position.z + " " + closestPosition);
                 if (hit.collider.gameObject.CompareTag("Obstacle") && hit.transform.position.z < closestPosition)
                 {
                     closestPosition = hit.transform.position.z;
@@ -139,23 +159,14 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Closest: " + closestPosition + "; modified: " + bModified);
-        if (bModified)
-        {
-            handlerMovement.MoveTo( Vector3.forward * (closestPosition - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)));
-        }
-        else
-        {
-            handlerMovement.MoveTo( Vector3.forward * spawner.DistanceToTemple);
-        }
+
+        handlerMovement.MoveTo(Vector3.forward * (bModified ? 
+            (closestPosition - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)) 
+            : spawner.DistanceToTemple));
     }
 
     private IEnumerator ReachGoal(bool bWin)
     {
-        if (bWin)
-        {
-            Debug.Log("Win????");
-        }
         goalLabel.SetText(bWin ? "Victory!" : "Game Over");
         goalLabelAnimation.Play(goalClip.name);
         yield return new WaitForSecondsRealtime(4f);

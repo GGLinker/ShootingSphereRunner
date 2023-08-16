@@ -21,7 +21,6 @@ public class TempleTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Yep");
             doorAnimation.Play(openDoorClip.name);
             
             OnTempleTriggerActivated?.Invoke();
