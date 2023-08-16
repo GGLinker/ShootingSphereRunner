@@ -41,7 +41,14 @@ public class PlayerController : MonoBehaviour
         
         handlerMovement.OnMovementTargetReached += () =>
         {
+            /*
             if (Vector3.Distance(bulletSpawn.position, temple.position) < spawner.templeFreeDistance)
+            {
+                handlerMovement.MoveTo( Vector3.forward * temple.position.z);
+                return;
+            }
+            */
+            if (DetermineClosestObstacle() == null)
             {
                 handlerMovement.MoveTo( Vector3.forward * temple.position.z);
                 return;
@@ -135,14 +142,22 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCloserToObstacles()
     {
+        Collider closestObstacle = DetermineClosestObstacle();
+
+        handlerMovement.MoveTo(Vector3.forward * (closestObstacle ? 
+            (closestObstacle.transform.position.z - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)) 
+            : spawner.DistanceToTemple));
+    }
+
+    private Collider DetermineClosestObstacle()
+    {
         RaycastHit hit;
 
-        float closestPosition = float.MaxValue;
+        Collider closestCollider = null;
 
         float roadPlaneWidth = roadPlane.localScale.x * 10;
         float shiftFraction = roadPlaneWidth / (obstacleDetectionAccuracy - 1);
-
-        bool bObstaclesFound = false;
+        
         for (int i = 0; i < obstacleDetectionAccuracy; i++)
         {
             if (Physics.Raycast(
@@ -152,18 +167,15 @@ public class PlayerController : MonoBehaviour
                     spawner.DistanceToTemple))
             {
                 if (hit.collider.gameObject.CompareTag("Obstacle")) {
-                    bObstaclesFound = true;
-                    if (hit.transform.position.z < closestPosition)
+                    if (closestCollider == null || hit.transform.position.z < closestCollider.transform.position.z)
                     {
-                        closestPosition = hit.transform.position.z;
+                        closestCollider = hit.collider;
                     }
                 }
             }
         }
 
-        handlerMovement.MoveTo(Vector3.forward * (bObstaclesFound ? 
-            (closestPosition - (bulletSpawn.localPosition.z + spawner.minSpawnDistance)) 
-            : spawner.DistanceToTemple));
+        return closestCollider;
     }
 
     private IEnumerator ReachGoal(bool bWin)

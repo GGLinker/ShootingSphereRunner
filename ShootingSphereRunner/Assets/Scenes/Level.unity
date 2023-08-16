@@ -675,7 +675,7 @@ PrefabInstance:
     - target: {fileID: 788737170081664261, guid: 541a8e4b7437a164da3db5d429a42ba5,
         type: 3}
       propertyPath: fillRate
-      value: 65
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 3513520281414860960, guid: 541a8e4b7437a164da3db5d429a42ba5,
         type: 3}
@@ -756,10 +756,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6009896892286306937, guid: 4fead528bcbc12344a9f0e409e293f93,
+        type: 3}
+      propertyPath: m_Name
+      value: IndoorDecoration
+      objectReference: {fileID: 0}
     - target: {fileID: 6009896893447430308, guid: 4fead528bcbc12344a9f0e409e293f93,
         type: 3}
       propertyPath: m_Name
       value: Temple
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009896893447430311, guid: 4fead528bcbc12344a9f0e409e293f93,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.1573197
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009896893447430311, guid: 4fead528bcbc12344a9f0e409e293f93,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.8536598
       objectReference: {fileID: 0}
     - target: {fileID: 6009896893447430312, guid: 4fead528bcbc12344a9f0e409e293f93,
         type: 3}
@@ -794,7 +809,7 @@ PrefabInstance:
     - target: {fileID: 6009896893447430312, guid: 4fead528bcbc12344a9f0e409e293f93,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 6009896893447430312, guid: 4fead528bcbc12344a9f0e409e293f93,
         type: 3}
