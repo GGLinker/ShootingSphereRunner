@@ -121,10 +121,10 @@ MonoBehaviour:
     type: 3}
   bulletSpawn: {fileID: 3460599802124620974}
   obstacleDetectionAccuracy: 4
-  ballInitialScale: 3.5
+  ballInitialScale: 3.4
   bulletInitialScale: 0.15
   scalingThreshold: 0.4
-  scaleSpeed: 0.45
+  scaleSpeed: 0.48
   goalLabel: {fileID: 0}
   goalLabelAnimation: {fileID: 0}
   goalClip: {fileID: 7400000, guid: a964f9b6c2ddc1c498ad2adea282b5fe, type: 2}

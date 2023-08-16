@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flySpeed: 15
-  triggerExpansionCoefficient: 7.5
+  triggerExpansionCoefficient: 1.85
   autoDestructDelay: 0.7
   triggerSphere: {fileID: 6424880115943202228}
 --- !u!135 &6424880115943202228
