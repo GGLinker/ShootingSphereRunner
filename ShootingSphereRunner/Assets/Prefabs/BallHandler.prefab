@@ -29,7 +29,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3513520281414860962}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3513520281414860960
 GameObject:
@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 3513520281414860963}
   - component: {fileID: 3513520281414860965}
   - component: {fileID: 139146544676088404}
+  - component: {fileID: 788737170081664261}
   m_Layer: 0
   m_Name: BallHandler
   m_TagString: Untagged
@@ -64,6 +65,7 @@ Transform:
   m_Children:
   - {fileID: 3513520281760231885}
   - {fileID: 3513520282911336246}
+  - {fileID: 533389887651004099}
   - {fileID: 3460599802124620974}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,12 +111,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91490c653265f124c8c7286e902303d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 788737170081664261}
+  handlerMovement: {fileID: 3513520281414860963}
   bouncingBall: {fileID: 3513520282911336246}
+  roadPlane: {fileID: 533389887651004099}
   bulletPrefab: {fileID: 4977889114365174262, guid: 996d904834468bb43bc483ca3b4b5d17,
     type: 3}
   bulletSpawn: {fileID: 3460599802124620974}
+  obstacleDetectionAccuracy: 4
   scalingThreshold: 0.5
-  scaleSpeed: 1
+  scaleSpeed: 0.5
+--- !u!114 &788737170081664261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513520281414860960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75708527c91404443ac860627a14935f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePrefab: {fileID: 1234303696649584987, guid: aed967477a2368849a7e32f47168e908,
+    type: 3}
+  fillRate: 60
+  bulletSpawn: {fileID: 3460599802124620974}
+  temple: {fileID: 0}
+  minSpawnDistance: 3
+  templeFreeDistance: 5
+  widthSpawnBounds: 10
 --- !u!1 &3513520281760231880
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,3 +354,101 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   surfacePlaneCollider: {fileID: 0}
   bounceIntensity: 300
+--- !u!1 &4435999631503372431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 533389887651004099}
+  - component: {fileID: 2289101790435299148}
+  - component: {fileID: 8185064667539687205}
+  - component: {fileID: 6889712767593871570}
+  m_Layer: 0
+  m_Name: RoadPlane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &533389887651004099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435999631503372431}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 0.2, y: 1, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3513520281414860962}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2289101790435299148
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435999631503372431}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &8185064667539687205
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435999631503372431}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6105b05e22bd8e04094a23748e484779, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6889712767593871570
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435999631503372431}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}

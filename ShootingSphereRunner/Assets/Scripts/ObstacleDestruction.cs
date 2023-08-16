@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animation))]
 public class ObstacleDestruction : MonoBehaviour
 {
-    [SerializeField] private AnimationClip destructionClip;
+    [SerializeField] public AnimationClip destructionClip;
 
     private Animation obstacleAnimation;
 

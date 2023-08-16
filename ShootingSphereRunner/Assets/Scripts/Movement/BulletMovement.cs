@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,8 @@ using UnityEngine;
 public class BulletMovement : MonoBehaviour
 {
     [SerializeField] private float flySpeed;
-    [SerializeField] private Collider triggerSphere;
+    [SerializeField] private float triggerExpansionCoefficient;
+    [SerializeField] private SphereCollider triggerSphere;
 
     public delegate void BulletCollision(GameObject self, List<ObstacleDestruction> surroundObstacles);
     public event BulletCollision OnBulletCollision;
@@ -16,9 +16,15 @@ public class BulletMovement : MonoBehaviour
 
     private void Start()
     {
+        surroundObstacles = new List<ObstacleDestruction>();
         bulletRigidbody = transform.GetComponent<Rigidbody>();
     }
 
+    public void AddScale(Vector3 value)
+    {
+        transform.localScale += value;
+        triggerSphere.radius += value.x * triggerExpansionCoefficient;
+    }
     public void Fly()
     {
         bulletRigidbody.velocity = Vector3.forward * flySpeed;
